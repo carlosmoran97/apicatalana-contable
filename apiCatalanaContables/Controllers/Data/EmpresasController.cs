@@ -9,40 +9,36 @@ using apiCatalanaContables.Models;
 using System.Net.Http;
 using Newtonsoft.Json;
 
-namespace apiCatalanaContables.Controllers
+namespace apiCatalanaContables.Controllers.Data
 {
     [Route("api/[controller]")]
     [ApiController]
     public class EmpresasController : ControllerBase
     {
         private readonly catalanacontablesContext _context;
-        private string endpointApi = "http://190.86.189.141:8099/api/";
 
         public EmpresasController(catalanacontablesContext context)
         {
             _context = context;
         }
 
-        [HttpGet("kk")]
-        public string kk()
-        {
-            return "kk";
-
-        }
-
-
-        [HttpGet("ApiAgregarEmpresas")]
+        [HttpGet("apiagregarempresas")]
         public async Task<IActionResult> ApiAgregarEmpresas()
         {
-            // _context.Database.ExecuteSqlRaw("TRUNCATE TABLE Empresas");
-           // _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Empresas ON");
             var httpClientApi = HttpClientFactory.Create();
-            var url = endpointApi + "Empresas";
+            var url = Help.Help.endPointApi() + "Empresas";
             string response = await httpClientApi.GetStringAsync(url);
             List<EmpresasApi> list = JsonConvert.DeserializeObject<List<EmpresasApi>>(response);
 
             foreach(EmpresasApi p in list)
             {
+                var e = EmpresasExists(p.id);
+                if (e == true)
+                {
+                    var empresas = await _context.Empresas.FindAsync(p.id);
+                    _context.Empresas.Remove(empresas);
+                    await _context.SaveChangesAsync();
+                }
                 Empresas emp = new Empresas();
                 emp.Id = p.id;
                 emp.Empresa = p.nombreEmpresa;

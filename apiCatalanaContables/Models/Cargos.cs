@@ -17,4 +17,19 @@ namespace apiCatalanaContables.Models
         public virtual Departamentos Departamento { get; set; }
         public virtual ICollection<Usuarios> Usuarios { get; set; }
     }
+
+
+    public partial class CargosApi
+    {
+        public CargosApi()
+        {
+           
+        }
+
+        public int id { get; set; }
+        public int id_Dpto { get; set; }
+        public string nombrecargo { get; set; }
+
+       
+    }
 }

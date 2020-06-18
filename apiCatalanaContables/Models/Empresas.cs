@@ -19,14 +19,12 @@ namespace apiCatalanaContables.Models
         public virtual ICollection<Usuarios> Usuarios { get; set; }
     }
 
-
     public partial class EmpresasApi
     {
         public EmpresasApi()
         {
             
         }
-
         public int id { get; set; }
         public string nombreEmpresa { get; set; }
         public string abreviatura { get; set; }

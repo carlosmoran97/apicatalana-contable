@@ -31,4 +31,18 @@ namespace apiCatalanaContables.Models
         public virtual Roles Rol { get; set; }
         public virtual ICollection<PermisosUsuarios> PermisosUsuarios { get; set; }
     }
+
+    public class UsuariosAuth
+    {
+        public UsuariosAuth()
+        {
+           
+        }
+
+        public string Usuario { get; set; }
+       
+        public string Password { get; set; }
+
+      
+    }
 }
